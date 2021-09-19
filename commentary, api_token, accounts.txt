@@ -1,0 +1,38 @@
+pk_ce5bdc4788f142e482cbe7487a6f590a
+
+1st account:
+username: PattyBoi
+password: cs50iscool
+
+2nd account:
+username: ArséneLupin
+password: omarsyhaha
+
+3rd account:
+username: MonsterHunter
+password: chargeblade69
+
+4th account:
+username: RyujiSakamoto
+password: forreal??
+
+5th account:
+username: MidnightClub
+password: LAParisTokyo
+
+6th account:
+username: Toffifee
+password: 15Stück
+
+7th account:
+username: lol
+password: lol
+
+After 34 hours, asssuming I started from September 3rd (today's September 13th, 2021) I am giving up the personal touch section for now.
+Well, I mean I did make it possible to change background theme, just that every time you reload or go to a new page, the background theme is back on default.
+Freaking frustrating but whatever, I'll come back to it later maybe, so damn hard to make the system remember theme, I thought about session, local storage,
+database (oh damn, that's actually probably feasible, albeit not as elegant I guess), and other stuff. It's just that combining JavaScript, HTML and Python
+and all seems like a mystery.
+(Without the personal touch I got it done in like 24 hours I think)
+(Original idea was to slap a bootstrap theme onto it, and make it possible to switch, but there were like interferences because parts of the CSS were like
+already defined and stuff, idk man. But I guess the simple theme changes I have look good enough)
