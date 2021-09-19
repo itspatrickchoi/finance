@@ -72,7 +72,7 @@ def index():
             stocks_value += lookups[i]['total']
 
         print(lookups)
-        # OH FCK, I think I need to add user_id as foreign key to companies table...or wait..sketch schema again..
+        # OH F, I think I need to add user_id as foreign key to companies table...or wait..sketch schema again..
 
         cash = db.execute("SELECT cash FROM users WHERE id = ?",
                           session["user_id"])[0]['cash']
