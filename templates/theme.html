@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Theme
+{% endblock %}
+
+{% block main %}
+<!-- DROPDOWN FOR THEME CHANGE -->
+    {% if (theme == "styles") %}
+    <h2>Your current theme is "Light"!</h2>
+    <br>
+    {% endif %}
+    {% if (theme == "styles_dark") %}
+    <h2>Your current theme is "Dark"!</h2>
+    <br>
+    {% endif %}
+    {% if (theme == "styles_gradient") %}
+    <h2>Your current theme is "Gradient"!</h2>
+    <br>
+    {% endif %}
+    <form action="/theme" method="post">
+        <div class="form-group">
+            <select class="form-control" name="theme">
+                <option disabled selected value="">Theme</option>
+                <option value="styles">Light</option> <!-- onClick="setTheme('light')" -->
+                <option value="styles_dark">Dark</option> <!-- onClick="setTheme('dark')" -->
+                <option value="styles_gradient">Gradient</option> <!-- onClick="setTheme('gradient')" -->
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Change</button>
+        </form>
+{% endblock %}

@@ -13,7 +13,11 @@
         <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
         <link href="/static/favicon.ico" rel="icon">
 
-        <link id="myStyleSheet" href="/static/styles.css" rel="stylesheet">
+        {% if session.user_id %}
+        <link id="myStyleSheet" href="/static/{{theme}}.css" rel="stylesheet">
+        {% else %}
+        <link id=myStyleSheet href="static/styles.css" rel="stylesheet">
+        {% endif %}
 
         <!-- MY TRY FOR BACKGROUND COLOR CHANGE OPTION -->
         <!-- <link href="/static/bootstrap.min(Slate)" rel="stylesheet dark"> -->
@@ -39,8 +43,14 @@
                     default: break;
                 }
                 document.getElementById("myStyleSheet").href = style;
-                printf()
+                console.log(style);
+                //console.log({theme});
             }
+
+            // NOTE: OH, USE URL_FOR()? Like dynamically with URL_FOR('static', theme='styles.css') or sth??
+
+            /*document.addEventListener('DOMContentLoaded', setTheme({theme}));
+            document.addEventListener('DOMContentLoaded', console.log('Hello js here'));
 
             // Immediately invoked function to set the theme on initial load
             function loadTheme() {
@@ -56,7 +66,7 @@
                 else {
                     return 0;
                 }
-            }
+            }*/
 
         </script>
 
@@ -84,19 +94,8 @@
                         <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
                     </ul>
                     <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/theme">Change Theme</a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
-
-                        <!-- DROPDOWN FOR THEME CHANGE -->
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Theme
-                            </button>
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" onClick="setTheme('light')" name="light">Light</a>
-                                <a class="dropdown-item" onClick="setTheme('dark')" name="dark">Dark</a>
-                                <a class="dropdown-item" onClick="setTheme('gradient')" name="gradient">Gradient</a>
-                              </div>
-                        </div>
                     </ul>
                 {% else %}
                     <ul class="navbar-nav ml-auto mt-2">

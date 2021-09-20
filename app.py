@@ -17,8 +17,9 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-
 # Ensure responses aren't cached
+
+
 @app.after_request
 def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -51,7 +52,7 @@ def index():
     # ok, none of the print messages happen inside the if and else...wtf..
     if request.method == "POST":
         print("homiee")
-        return apology("POST TODO")
+        return apology("post TODO")
     else:
         print("homeeeee")
 
@@ -78,11 +79,11 @@ def index():
                           session["user_id"])[0]['cash']
         grandtotal = cash + stocks_value
 
-        #theme = request.a.get("dark")
-        # print(theme)
+        theme = session['theme']
+        print(theme)
         #session["theme"] = theme
 
-        return render_template("index.html", lookups=lookups, cash=cash, grandtotal=grandtotal)
+        return render_template("index.html", lookups=lookups, cash=cash, grandtotal=grandtotal, theme=theme)
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -170,7 +171,9 @@ def buy():
         return redirect("/")
 
     else:
-        return render_template("buy.html")
+        theme = session['theme']
+        print(theme)
+        return render_template("buy.html", theme=theme)
 
     # Finally finished with buy()!!! after a whole week and clocking ~24 hours!! And current status is all checks in check50 are fulfilled except the sell() which I haven't implemented yet. And of buy() the "handles valid purchase, expected to find "112.00" in page"
 
@@ -184,7 +187,10 @@ def history():
     print(history)
     rows_history = len(history)
     print(rows_history)
-    return render_template("history.html", history=history)
+
+    theme = session['theme']
+    print(theme)
+    return render_template("history.html", history=history, theme=theme)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -216,6 +222,10 @@ def login():
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
         print("user logged in: " + str(session["user_id"]))
+
+        # Check which theme the user is on
+        session["theme"] = rows[0]["theme"]
+        print("theme: " + str(session["theme"]))
 
         # Redirect user to home page
         return redirect("/")
@@ -249,9 +259,14 @@ def quote():
         symbol = quote['symbol']
         print(quote)
         print(price)
-        return render_template("quoted.html", name=name, symbol=symbol, price=price)
+
+        theme = session['theme']
+        print(theme)
+        return render_template("quoted.html", name=name, symbol=symbol, price=price, theme=theme)
     else:
-        return render_template("quote.html")
+        theme = session['theme']
+        print(theme)
+        return render_template("quote.html", theme=theme)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -358,11 +373,35 @@ def sell():
         portfolio = db.execute(
             "SELECT stock FROM users_stocks WHERE user_id = ?", session["user_id"])
         print("portfolio: " + str(portfolio))
-        return render_template("sell.html", portfolio=portfolio)
 
-# @app.route('/theme', methods=['GET', 'POST'])
-# @login_required
-# def theme():
+        theme = session['theme']
+        print(theme)
+        return render_template("sell.html", portfolio=portfolio, theme=theme)
+
+
+@app.route("/theme", methods=["GET", "POST"])
+@login_required
+def theme():
+    """Allow to change theme"""
+    if request.method == "POST":
+        # Update the user's themes
+        theme = request.form.get("theme")
+        print(theme)
+        db.execute("UPDATE users SET theme = ? WHERE id = ?",
+                   theme, session["user_id"])
+
+        rows = db.execute("SELECT * FROM users WHERE id = ?",
+                          session["user_id"])
+
+        # Update theme for the user's session
+        session["theme"] = rows[0]["theme"]
+        print("new session['theme'] is now: " + str(session["theme"]))
+        print("homiee")
+        return redirect("/")
+    else:
+        theme = session['theme']
+        print(theme)
+        return render_template("theme.html", theme=theme)
 
 
 def errorhandler(e):
